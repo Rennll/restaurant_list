@@ -27,10 +27,13 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
 
 // setting search page, use query string to filter specific restaurant
 // 關鍵字可用英文、中文、類型
+// 由於類型無英文，所以不須 .toLowerCase() ，其餘皆需要
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword.trim()
+  const keyword = req.query.keyword.trim().toLowerCase()
   const restaurant = restaurants.results.filter((restaurant) => {
-    return restaurant.name_en.toLowerCase().includes(keyword.toLowerCase()) || restaurant.name.includes(keyword) || restaurant.category.includes(keyword)
+    return restaurant.name_en.toLowerCase().includes(keyword) 
+      || restaurant.name.toLowerCase().includes(keyword)
+      || restaurant.category.includes(keyword)
   })
   res.render('index', { restaurant, keyword, isKeywordExist: restaurant.length })
 })
