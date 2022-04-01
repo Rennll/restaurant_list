@@ -14,15 +14,19 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 // setting routes
+// 利用 isKeywordExist 控制是否出現搜尋不到的提示
 app.get('/', (req,res) => {
   res.render('index', { restaurant: restaurants.results, isKeywordExist: 1 })
 })
 
+// setting show page by dynamic routes
 app.get('/restaurants/:restaurant_id', (req, res) => {
   const restaurant = restaurants.results.find(restaurant => restaurant.id.toString() === req.params.restaurant_id)
   res.render('show', { restaurant })
 })
 
+// setting search page, use query string to filter specific restaurant
+// 關鍵字可用英文、中文、類型
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim()
   const restaurant = restaurants.results.filter((restaurant) => {

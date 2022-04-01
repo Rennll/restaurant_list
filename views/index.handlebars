@@ -17,6 +17,7 @@
 
 <!-- restaurant list -->
 <div class="container mt-5">
+  {{!-- if keyword is not exist, show this h2 string. --}}
   {{#unless isKeywordExist}}
     <h2 class="text-center">{{ keyword }} is not exist.</h2>
   {{/unless}}
